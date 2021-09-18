@@ -22,48 +22,49 @@ int AI::BestMove(std::string Board[3][3]){
 }
 
 int AI::Minimax(std::string Board[3][3], int depth, bool bIsMaximizing){
+    //Check if the game is at an end state
     std::string result = CheckWinner(Board);
     if (result != "") {
         if (result == "X") {
-            return -10;
+            return -10 - depth;
         }
         else if (result == "O") {
-            return 10;
+            return 10 - depth;
         } else {
-            return 0;
+            return 0 - depth;
         }
     }
-
+    //Investigate incursively all the possible moves
     if (bIsMaximizing) {
-        int bestScore = -1000;
-        int score;
+        int BestScore = -1000;
+        int Score;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 // Is the spot available?
                 if (Board[i][j] == "") {
                     Board[i][j] = "O";
-                    score = Minimax(Board, depth + 1, false);
+                    Score = Minimax(Board, depth + 1, false);
                     Board[i][j] = "";
-                    if (score > bestScore) {
-                        bestScore = score;
+                    if (Score > BestScore) {
+                        BestScore = Score;
                     }
                 }
             }
         }
-        return bestScore;
+        return BestScore;
     }
     else {
         int WorstScore = 1000;
-        int score;
+        int Score;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 // Is the spot available?
                 if (Board[i][j] == "") {
                     Board[i][j] = "X";
-                    score = Minimax(Board, depth + 1, true);
+                    Score = Minimax(Board, depth + 1, true);
                     Board[i][j] = "";
-                    if (score < WorstScore) {
-                        WorstScore = score;
+                    if (Score < WorstScore) {
+                        WorstScore = Score;
                     }
                 }
             }

@@ -32,10 +32,14 @@ void TicTacToe::GetUserInput() {
     int x, y;
     do {
         std::cout << "Please enter the column of your box:" << std::endl;
-        std::cin >> x;
+        do {
+            std::cin >> x;
+        } while (x < 0 || x > 2);
 
         std::cout << "Please enter the raw of your box:" << std::endl;
-        std::cin >> y;
+        do {
+            std::cin >> y;
+        } while (y < 0 || y > 2);
     } while (Board[y][x] != "");
     Board[y][x] = "X";
     EmptyBoxes--;
